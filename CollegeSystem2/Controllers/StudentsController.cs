@@ -6,11 +6,15 @@ using Domain.Entities;
 
 namespace CollegeSystem2.Controllers
 {
+    /// <summary>
+    /// API Controller for managing Student resources.
+    /// </summary>
+    
+
     [Route("api/[controller]")]
     [ApiController]
     public class StudentsController : ControllerBase
     {
-
         private readonly IStudentService _service;
 
         public StudentsController(IStudentService service)
@@ -18,49 +22,61 @@ namespace CollegeSystem2.Controllers
             _service = service;
         }
 
-
+        /// <summary>
+        /// Retrieves all students.
+        /// </summary>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<StudentDTO>>> GetAll()
+        public ActionResult<IEnumerable<StudentDTO>> GetAll()
         {
-            var students = await _service.GetAllAsync();
+            var students = _service.GetAll();
             return Ok(students);
         }
 
+        /// <summary>
+        /// Retrieves a student by Id.
+        /// </summary>
         [HttpGet("{id}")]
-        public async Task<ActionResult<StudentDTO>> GetById(int id)
+        public ActionResult<StudentDTO> GetById(int id)
         {
-            var student = await _service.GetByIdAsync(id);
-            if (student == null) return NotFound();
+            var student = _service.GetById(id);
+            if (student == null)
+                return NotFound();
             return Ok(student);
         }
 
+        /// <summary>
+        /// Creates a new student.
+        /// </summary>
         [HttpPost]
-        public async Task<ActionResult<StudentDTO>> Create([FromBody] StudentDTO dto)
+        public ActionResult<StudentDTO> Create([FromBody] StudentDTO dto)
         {
-            var createdStudent = await _service.AddAsync(dto);
+            var createdStudent = _service.Add(dto);
             return CreatedAtAction(nameof(GetById), new { id = createdStudent.Id }, createdStudent);
         }
 
+        /// <summary>
+        /// Updates an existing student.
+        /// </summary>
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] StudentDTO dto)
+        public IActionResult Update(int id, [FromBody] StudentDTO dto)
         {
             dto.Id = id;
-
-            var updatedStudent = await _service.UpdateAsync(dto);
-            if (updatedStudent == null) return NotFound();
-
+            var updatedStudent = _service.Update(dto);
+            if (updatedStudent == null)
+                return NotFound();
             return NoContent();
         }
 
+        /// <summary>
+        /// Deletes a student.
+        /// </summary>
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public IActionResult Delete(int id)
         {
-            var result = await _service.DeleteAsync(id);
-            if (!result) return NotFound();
+            var result = _service.Delete(id);
+            if (!result)
+                return NotFound();
             return NoContent();
         }
     }
 }
-
-    
-

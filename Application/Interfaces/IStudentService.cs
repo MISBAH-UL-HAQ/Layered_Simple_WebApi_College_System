@@ -8,12 +8,15 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
+    /// <summary>
+    /// Defines business operations for Student data.
+    /// </summary>
     public interface IStudentService
     {
-        Task<StudentDTO> GetByIdAsync(int id);
-        Task<IEnumerable<StudentDTO>> GetAllAsync();
-        Task<StudentDTO> AddAsync(StudentDTO dto);
-        Task<StudentDTO> UpdateAsync(StudentDTO dto);
-        Task<bool> DeleteAsync(int id);
+        StudentDTO GetById(int id);
+        IEnumerable<StudentDTO> GetAll();
+        StudentDTO Add(StudentDTO dto);
+        StudentDTO Update(StudentDTO dto);
+        bool Delete(int id);
     }
 }

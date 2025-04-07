@@ -7,12 +7,15 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
+    /// <summary>
+    /// Defines business operations for Department data.
+    /// </summary>
     public interface IDepartmentService
     {
-        Task<DepartmentDTO> GetByIdAsync(int id);
-        Task<IEnumerable<DepartmentDTO>> GetAllAsync();
-        Task<DepartmentDTO> AddAsync(DepartmentDTO dto);
-        Task<DepartmentDTO> UpdateAsync(DepartmentDTO dto);
-        Task<bool> DeleteAsync(int id);
+        DepartmentDTO GetById(int id);
+        IEnumerable<DepartmentDTO> GetAll();
+        DepartmentDTO Add(DepartmentDTO dto);
+        DepartmentDTO Update(DepartmentDTO dto);
+        bool Delete(int id);
     }
 }

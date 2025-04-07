@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 
 namespace Application.Services
 {
+
+    /// <summary>
+    /// Service layer for managing Student data.
+    /// </summary>
     public class StudentService : IStudentService
     {
         private readonly IStudentRepository _repository;
@@ -19,9 +23,12 @@ namespace Application.Services
             _repository = repository;
         }
 
-        public async Task<StudentDTO> GetByIdAsync(int id)
+        /// <summary>
+        /// Retrieves a student by its Id.
+        /// </summary>
+        public StudentDTO GetById(int id)
         {
-            var student = await _repository.GetByIdAsync(id);
+            var student = _repository.GetById(id);
             if (student == null) return null;
 
             return new StudentDTO
@@ -32,9 +39,12 @@ namespace Application.Services
             };
         }
 
-        public async Task<IEnumerable<StudentDTO>> GetAllAsync()
+        /// <summary>
+        /// Retrieves all students.
+        /// </summary>
+        public IEnumerable<StudentDTO> GetAll()
         {
-            var students = await _repository.GetAllAsync();
+            var students = _repository.GetAll();
             return students.Select(s => new StudentDTO
             {
                 Id = s.Id,
@@ -43,39 +53,47 @@ namespace Application.Services
             });
         }
 
-        public async Task<StudentDTO> AddAsync(StudentDTO dto)
+        /// <summary>
+        /// Adds a new student.
+        /// </summary>
+        public StudentDTO Add(StudentDTO dto)
         {
             var student = new Student
             {
                 Name = dto.Name,
                 DepartmentId = dto.DepartmentId
             };
-            await _repository.AddAsync(student);
-            await _repository.SaveChangesAsync();
+            _repository.Add(student);
+            _repository.SaveChanges();
             dto.Id = student.Id;
             return dto;
         }
 
-        public async Task<StudentDTO> UpdateAsync(StudentDTO dto)
+        /// <summary>
+        /// Updates an existing student.
+        /// </summary>
+        public StudentDTO Update(StudentDTO dto)
         {
-            var student = await _repository.GetByIdAsync(dto.Id);
+            var student = _repository.GetById(dto.Id);
             if (student == null) return null;
 
             student.Name = dto.Name;
             student.DepartmentId = dto.DepartmentId;
-            await _repository.UpdateAsync(student);
-            await _repository.SaveChangesAsync();
-
+            _repository.Update(student);
+            _repository.SaveChanges();
             return dto;
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        /// <summary>
+        /// Deletes a student by its Id.
+        /// </summary>
+        public bool Delete(int id)
         {
-            var student = await _repository.GetByIdAsync(id);
+            var student = _repository.GetById(id);
             if (student == null) return false;
 
-            await _repository.DeleteAsync(student);
-            await _repository.SaveChangesAsync();
+            _repository.Delete(student);
+            _repository.SaveChanges();
             return true;
         }
     }

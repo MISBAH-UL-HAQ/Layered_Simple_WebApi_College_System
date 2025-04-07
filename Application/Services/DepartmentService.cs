@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace Application.Services
 {
+    /// <summary>
+    /// Service layer for managing Department data.
+    /// </summary>
     public class DepartmentService : IDepartmentService
     {
         private readonly IDepartmentRepository _repository;
@@ -19,10 +22,12 @@ namespace Application.Services
             _repository = repository;
         }
 
-
-        public async Task<DepartmentDTO> GetByIdAsync(int id)
+        /// <summary>
+        /// Retrieves a department by its Id.
+        /// </summary>
+        public DepartmentDTO GetById(int id)
         {
-            var department = await _repository.GetByIdAsync(id);
+            var department = _repository.GetById(id);
             if (department == null) return null;
 
             return new DepartmentDTO
@@ -32,9 +37,12 @@ namespace Application.Services
             };
         }
 
-        public async Task<IEnumerable<DepartmentDTO>> GetAllAsync()
+        /// <summary>
+        /// Retrieves all departments.
+        /// </summary>
+        public IEnumerable<DepartmentDTO> GetAll()
         {
-            var departments = await _repository.GetAllAsync();
+            var departments = _repository.GetAll();
             return departments.Select(d => new DepartmentDTO
             {
                 Id = d.Id,
@@ -42,35 +50,42 @@ namespace Application.Services
             });
         }
 
-        public async Task<DepartmentDTO> AddAsync(DepartmentDTO dto)
+        /// <summary>
+        /// Adds a new department.
+        /// </summary>
+        public DepartmentDTO Add(DepartmentDTO dto)
         {
             var department = new Department { Name = dto.Name };
-            await _repository.AddAsync(department);
-            await _repository.SaveChangesAsync();
+            _repository.Add(department);
+            _repository.SaveChanges();
             dto.Id = department.Id;
             return dto;
         }
 
-        public async Task<DepartmentDTO> UpdateAsync(DepartmentDTO dto)
+        /// <summary>
+        /// Updates an existing department.
+        /// </summary>
+        public DepartmentDTO Update(DepartmentDTO dto)
         {
-            var department = await _repository.GetByIdAsync(dto.Id);
+            var department = _repository.GetById(dto.Id);
             if (department == null) return null;
 
             department.Name = dto.Name;
-            await _repository.UpdateAsync(department);
-            await _repository.SaveChangesAsync();
-
+            _repository.Update(department);
+            _repository.SaveChanges();
             return dto;
         }
 
-
-        public async Task<bool> DeleteAsync(int id)
+        /// <summary>
+        /// Deletes a department by its Id.
+        /// </summary>
+        public bool Delete(int id)
         {
-            var department = await _repository.GetByIdAsync(id);
+            var department = _repository.GetById(id);
             if (department == null) return false;
 
-            await _repository.DeleteAsync(department);
-            await _repository.SaveChangesAsync();
+            _repository.Delete(department);
+            _repository.SaveChanges();
             return true;
         }
     }

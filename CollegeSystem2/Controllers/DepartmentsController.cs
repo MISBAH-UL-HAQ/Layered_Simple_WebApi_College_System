@@ -5,6 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CollegeSystem2.Controllers
 {
+
+    /// <summary>
+    /// API Controller for managing Department resources.
+    /// </summary>
+    
+
     [Route("api/[controller]")]
     [ApiController]
     public class DepartmentsController : ControllerBase
@@ -16,54 +22,60 @@ namespace CollegeSystem2.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Retrieves all departments.
+        /// </summary>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<DepartmentDTO>>> GetAll()
+        public ActionResult<IEnumerable<DepartmentDTO>> GetAll()
         {
-            try
-            {
-                //throw new Exception("Something went wrong!"); 
-                var departments = await _service.GetAllAsync();
-                return Ok(departments);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"An error occurred: {ex.Message}");
-            }
+            var departments = _service.GetAll();
+            return Ok(departments);
         }
 
+        /// <summary>
+        /// Retrieves a department by Id.
+        /// </summary>
         [HttpGet("{id}")]
-        public async Task<ActionResult<DepartmentDTO>> GetById(int id)
+        public ActionResult<DepartmentDTO> GetById(int id)
         {
-            var department = await _service.GetByIdAsync(id);
-            if (department == null) return NotFound();
+            var department = _service.GetById(id);
+            if (department == null)
+                return NotFound();
             return Ok(department);
         }
 
+        /// <summary>
+        /// Creates a new department.
+        /// </summary>
         [HttpPost]
-        public async Task<ActionResult<DepartmentDTO>> Create([FromBody] DepartmentDTO dto)
+        public ActionResult<DepartmentDTO> Create([FromBody] DepartmentDTO dto)
         {
-            var createdDepartment = await _service.AddAsync(dto);
+            var createdDepartment = _service.Add(dto);
             return CreatedAtAction(nameof(GetById), new { id = createdDepartment.Id }, createdDepartment);
         }
 
-
-
+        /// <summary>
+        /// Updates an existing department.
+        /// </summary>
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] DepartmentDTO dto)
+        public IActionResult Update(int id, [FromBody] DepartmentDTO dto)
         {
             dto.Id = id;
-            var updatedDepartment = await _service.UpdateAsync(dto);
-            if (updatedDepartment == null) return NotFound();
+            var updatedDepartment = _service.Update(dto);
+            if (updatedDepartment == null)
+                return NotFound();
             return NoContent();
         }
 
-
-
+        /// <summary>
+        /// Deletes a department.
+        /// </summary>
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public IActionResult Delete(int id)
         {
-            var result = await _service.DeleteAsync(id);
-            if (!result) return NotFound();
+            var result = _service.Delete(id);
+            if (!result)
+                return NotFound();
             return NoContent();
         }
     }

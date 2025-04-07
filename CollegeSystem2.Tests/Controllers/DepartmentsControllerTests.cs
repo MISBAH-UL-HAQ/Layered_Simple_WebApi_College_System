@@ -35,10 +35,10 @@ namespace CollegeSystem2.Tests.Controllers
             new DepartmentDTO { Id = 2, Name = "Mathematics" }
         };
 
-            _mockService.Setup(service => service.GetAllAsync()).ReturnsAsync(departmentList);
+            _mockService.Setup(service => service.GetAll()).Returns(departmentList);
 
             // Act
-            var result = await _controller.GetAll();
+            var result = _controller.GetAll();
 
             // Assert
             var actionResult = Assert.IsType<ActionResult<IEnumerable<DepartmentDTO>>>(result);

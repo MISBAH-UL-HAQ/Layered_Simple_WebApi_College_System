@@ -11,6 +11,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
+
+    /// <summary>
+    /// Repository for managing Student data synchronously.
+    /// </summary>
     public class StudentRepository : IStudentRepository
     {
         private readonly AppDbContext _context;
@@ -20,12 +24,34 @@ namespace Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<Student> GetByIdAsync(int id) => await _context.Students.FindAsync(id);
-        public async Task<IEnumerable<Student>> GetAllAsync() => await _context.Students.ToListAsync();
-        public async Task AddAsync(Student entity) => await _context.Students.AddAsync(entity);
-        public async Task UpdateAsync(Student entity) => _context.Students.Update(entity);
-        public async Task DeleteAsync(Student entity) => _context.Students.Remove(entity);
-        public async Task SaveChangesAsync() => await _context.SaveChangesAsync();
+        /// <summary>
+        /// Finds a student by Id.
+        /// </summary>
+        public Student GetById(int id) => _context.Students.Find(id);
+
+        /// <summary>
+        /// Retrieves all students.
+        /// </summary>
+        public IEnumerable<Student> GetAll() => _context.Students.ToList();
+
+        /// <summary>
+        /// Adds a new student.
+        /// </summary>
+        public void Add(Student entity) => _context.Students.Add(entity);
+
+        /// <summary>
+        /// Updates an existing student.
+        /// </summary>
+        public void Update(Student entity) => _context.Students.Update(entity);
+
+        /// <summary>
+        /// Deletes a student.
+        /// </summary>
+        public void Delete(Student entity) => _context.Students.Remove(entity);
+
+        /// <summary>
+        /// Saves changes to the database.
+        /// </summary>
+        public void SaveChanges() => _context.SaveChanges();
     }
 }
-

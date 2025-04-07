@@ -7,14 +7,16 @@ using System.Threading.Tasks;
 
 namespace Domain.Interfaces
 {
+    /// <summary>
+    /// Defines repository operations for Department entities.
+    /// </summary>
     public interface IDepartmentRepository
     {
-        Task<Department> GetByIdAsync(int id);
-        Task<IEnumerable<Department>> GetAllAsync();
-        Task AddAsync(Department entity);
-        Task UpdateAsync(Department entity);
-        Task DeleteAsync(Department entity);
-        Task SaveChangesAsync();
+        Department GetById(int id);
+        IEnumerable<Department> GetAll();
+        void Add(Department entity);
+        void Update(Department entity);
+        void Delete(Department entity);
+        void SaveChanges();
     }
-
 }

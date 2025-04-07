@@ -14,28 +14,31 @@ namespace CollegeSystem2.Middleware
             _next = next;
         }
 
-        public async Task Invoke(HttpContext context)
+        public Task Invoke(HttpContext context)
         {
             try
             {
-                await _next(context);
+                 _next(context);
             }
             catch (Exception ex)
             {
-                await HandleExceptionAsync(context, ex);
+                 HandleException(context, ex);
             }
+            return Task.CompletedTask;
         }
 
-        private static Task HandleExceptionAsync(HttpContext context, Exception exception)
+        private static void HandleException(HttpContext context, Exception exception)
         {
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            return context.Response.WriteAsync(new
+            var errorResponse = new
             {
                 StatusCode = context.Response.StatusCode,
                 Message = "An unexpected error occurred. Please try again later."
-            }.ToString());
+            };
+
+            context.Response.WriteAsync(errorResponse.ToString()); 
         }
     }
 }

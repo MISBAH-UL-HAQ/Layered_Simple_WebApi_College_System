@@ -7,13 +7,17 @@ using System.Threading.Tasks;
 
 namespace Domain.Interfaces
 {
+    /// <summary>
+    /// Defines repository operations for Student entities.
+    /// </summary>
     public interface IStudentRepository
     {
-        Task<Student> GetByIdAsync(int id);
-        Task<IEnumerable<Student>> GetAllAsync();
-        Task AddAsync(Student entity);
-        Task UpdateAsync(Student entity);
-        Task DeleteAsync(Student entity);
-        Task SaveChangesAsync();
+        Student GetById(int id);
+        IEnumerable<Student> GetAll();
+        void Add(Student entity);
+        void Update(Student entity);
+        void Delete(Student entity);
+        void SaveChanges();
     }
 }
+
