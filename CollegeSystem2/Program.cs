@@ -16,12 +16,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 
-// Add CORS policy
+// CORS policy
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp", policy =>
     {
-        policy.WithOrigins("http://localhost:3000") // URL where your React app is running
+        policy.WithOrigins("http://localhost:3000") // Running React app URL
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
