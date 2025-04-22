@@ -31,7 +31,7 @@ namespace CollegeSystem2.Tests.Controllers
             // Arrange
             var departmentList = new List<DepartmentDTO>
         {
-            new DepartmentDTO { Id = 1, Name = "Computer Science" },
+            new  DepartmentDTO { Id = 1, Name = "Computer Science" },
             new DepartmentDTO { Id = 2, Name = "Mathematics" }
         };
 
@@ -46,6 +46,9 @@ namespace CollegeSystem2.Tests.Controllers
             var returnValue = Assert.IsType<List<DepartmentDTO>>(okResult.Value);
 
             Assert.Equal(2, returnValue.Count);
+            //Assert.Single(returnValue);
+            //Assert.Contains(returnValue, d => d.Name == "Computer Science");
+            //Assert.Contains(returnValue, d => d.Name == "Math");
         }
 
     }

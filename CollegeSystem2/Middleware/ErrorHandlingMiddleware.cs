@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Net;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace CollegeSystem2.Middleware
@@ -38,7 +39,10 @@ namespace CollegeSystem2.Middleware
                 Message = "An unexpected error occurred. Please try again later."
             };
 
-            context.Response.WriteAsync(errorResponse.ToString()); 
+            var jsonResponse = JsonSerializer.Serialize(errorResponse);
+
+            
+            context.Response.WriteAsync(jsonResponse);
         }
     }
 }
