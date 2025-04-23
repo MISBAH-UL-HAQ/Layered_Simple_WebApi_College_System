@@ -12,70 +12,6 @@ using System.Text;
 using Application.Services.Application.Services;
 using Microsoft.Extensions.Hosting;
 
-//var builder = WebApplication.CreateBuilder(args);
-
-
-
-
-//// Add services to the container.
-
-//builder.Services.AddControllers();
-
-
-//// CORS policy
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy("AllowReactApp", policy =>
-//    {
-//        policy.WithOrigins("http://localhost:3000") // Running React app URL
-//              .AllowAnyHeader()
-//              .AllowAnyMethod();
-//    });
-//});
-
-
-//// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
-
-
-//// Add services
-//builder.Services.AddDbContext<AppDbContext>(options =>
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-//// Register repositories
-//builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
-//builder.Services.AddScoped<IStudentRepository, StudentRepository>();
-
-//// Register services
-//builder.Services.AddScoped<IDepartmentService, DepartmentService>();
-//builder.Services.AddScoped<IStudentService, StudentService>();
-
-//var app = builder.Build();
-
-//// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//}
-
-//app.UseHttpsRedirection();
-
-//app.UseMiddleware<ErrorHandlingMiddleware>();
-
-//app.UseAuthorization();
-
-//// Use CORS policy
-//app.UseCors("AllowReactApp");
-
-//app.MapControllers();
-
-//app.Run();
-
-
-
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -85,42 +21,6 @@ builder.Services.AddControllers();
 // Configure EF Core with SQL Server
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-//// Configure Identity with our ApplicationUser
-//builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
-//{
-//    options.Password.RequireDigit = false;
-//    options.Password.RequireLowercase = false;
-//    options.Password.RequireUppercase = false;
-//    options.Password.RequireNonAlphanumeric = false;
-//    options.Password.RequiredLength = 6;
-//})
-//.AddEntityFrameworkStores<AppDbContext>()
-//.AddDefaultTokenProviders();
-
-//// Configure JWT Authentication
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//})
-//.AddJwtBearer(options =>
-//{
-//    var jwtSettings = builder.Configuration.GetSection("Jwt");
-//    options.TokenValidationParameters = new TokenValidationParameters
-//    {
-//        ValidateIssuer = true,
-//        ValidateAudience = true,
-//        ValidateLifetime = true,
-//        ValidateIssuerSigningKey = true,
-//        ValidIssuer = jwtSettings["Issuer"],
-//        ValidAudience = jwtSettings["Audience"],
-//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]))
-//    };
-//});
-
-
-
 
 
 // Configure Identity with ApplicationUser (relaxed password settings)
